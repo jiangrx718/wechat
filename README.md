@@ -1,4 +1,4 @@
-Wechat项目，使用go语言编写，使用gorm作为数据库驱动，使用gin作为web框架，使用gormgen作为数据库模型生成工具，使用gormgen作为数据库模型生成工具，使用gormgen作为数据库模型生成工具。
+Wechat 项目，使用go语言编写，使用gorm作为数据库驱动，使用gin作为web框架，使用gormgen作为数据库模型生成工具，使用gormgen作为数据库模型生成工具，使用gormgen作为数据库模型生成工具。
 
 config目录下存放配置文件，develop.yml为应用本地开发配置，app.yml为正式应用配置文件，create_db.sh为创建数据库脚本文件，start.sh为更新镜像最新版本脚本文件。
 
