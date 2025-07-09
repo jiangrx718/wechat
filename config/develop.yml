@@ -1,0 +1,14 @@
+app: wechat
+port: 8081
+debug: true
+db:
+  wechat:
+    dialect: mysql
+    dsn: root:123456@tcp(127.0.0.1:3306)/wechat?charset=utf8mb4&parseTime=True&loc=Local
+mini:
+  app_id: wx1234567890123456
+  app_secret: 12345678901234567890123456789012
+log:
+  outputs:
+    - stdout
+    - ./logs/api.log
