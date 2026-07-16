@@ -29,6 +29,7 @@ func newSWechatUser(db *gorm.DB, opts ...gen.DOOption) sWechatUser {
 	tableName := _sWechatUser.sWechatUserDo.TableName()
 	_sWechatUser.ALL = field.NewAsterisk(tableName)
 	_sWechatUser.Id = field.NewUint64(tableName, "id")
+	_sWechatUser.DeviceId = field.NewString(tableName, "device_id")
 	_sWechatUser.UserName = field.NewString(tableName, "user_name")
 	_sWechatUser.Score = field.NewInt(tableName, "score")
 	_sWechatUser.CreatedAt = field.NewTime(tableName, "created_at")
@@ -45,6 +46,7 @@ type sWechatUser struct {
 
 	ALL       field.Asterisk
 	Id        field.Uint64 // 主键
+	DeviceId  field.String // 设备ID
 	UserName  field.String // 用户名
 	Score     field.Int    // 分值
 	CreatedAt field.Time   // 添加时间
@@ -67,6 +69,7 @@ func (s sWechatUser) As(alias string) *sWechatUser {
 func (s *sWechatUser) updateTableName(table string) *sWechatUser {
 	s.ALL = field.NewAsterisk(table)
 	s.Id = field.NewUint64(table, "id")
+	s.DeviceId = field.NewString(table, "device_id")
 	s.UserName = field.NewString(table, "user_name")
 	s.Score = field.NewInt(table, "score")
 	s.CreatedAt = field.NewTime(table, "created_at")
@@ -88,8 +91,9 @@ func (s *sWechatUser) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (s *sWechatUser) fillFieldMap() {
-	s.fieldMap = make(map[string]field.Expr, 6)
+	s.fieldMap = make(map[string]field.Expr, 7)
 	s.fieldMap["id"] = s.Id
+	s.fieldMap["device_id"] = s.DeviceId
 	s.fieldMap["user_name"] = s.UserName
 	s.fieldMap["score"] = s.Score
 	s.fieldMap["created_at"] = s.CreatedAt
