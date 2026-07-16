@@ -9,11 +9,9 @@ log:
   outputs:
     - stdout
     - ./logs/wechat-app.log
-# 数据库配置
 tools:
   dialect: mysql
   dsn: root:123456@tcp(127.0.0.1:3306)/wechat?charset=utf8mb4&parseTime=True&loc=Local
-# 定时任务配置
 demo:
   switch: false
   cron: "*/1 * * * *"
