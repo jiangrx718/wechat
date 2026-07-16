@@ -24,4 +24,5 @@ func (h *WechatUserHandler) RegisterRoutes(routerGroup *gin.RouterGroup) {
 	// 绘本相关接口
 	g.POST("/create", h.Create)
 	g.POST("/update", h.Update)
+	g.GET("/list", h.List)
 }
