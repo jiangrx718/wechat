@@ -20,14 +20,17 @@ func (s *Service) Update(ctx context.Context, userName string, score int) (commo
 
 	wechatUserDao := dao.SWechatUser
 
-	// 校验用户是否存在
-	count, err := wechatUserDao.Where(wechatUserDao.UserName.Eq(userName)).Count()
+	// 校验用户是否存在并获取当前数据
+	user, err := wechatUserDao.Where(wechatUserDao.UserName.Eq(userName)).First()
 	if err != nil {
-		logger.Errorw("WechatUserService Update Count error", "user_name", userName, "error", err)
-		return result, err
-	}
-	if count == 0 {
+		logger.Errorw("WechatUserService Update First error", "user_name", userName, "error", err)
 		result.SetError(&common.ServiceError{Code: 400, Message: "用户不存在"})
+		return result, nil
+	}
+
+	// 如果数据库中的score小于传递过来的score，直接返回
+	if user.Score > score {
+		result.SetError(&common.ServiceError{Code: 400, Message: "本局分值低于过往最高分，继续加油💪🏻"})
 		return result, nil
 	}
 
