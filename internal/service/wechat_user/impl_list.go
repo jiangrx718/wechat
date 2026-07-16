@@ -16,12 +16,14 @@ type ListResponseData struct {
 
 type WechatUserItem struct {
 	UserName string `json:"user_name"`
+	DeviceId string `json:"device_id"`
 	Score    int    `json:"score"`
 }
 
 func toWechatUserItem(m *model.SWechatUser) WechatUserItem {
 	return WechatUserItem{
 		UserName: m.UserName,
+		DeviceId: m.DeviceId,
 		Score:    m.Score,
 	}
 }
@@ -35,6 +37,7 @@ func (s *Service) List(ctx context.Context) (common.ServiceResult, error) {
 	wechatUserDao := dao.SWechatUser
 	where := []gen.Condition{
 		wechatUserDao.Score.Gt(0),
+		wechatUserDao.DeviceId.Neq(""),
 	}
 
 	list, _, err := wechatUserDao.Where(where...).Order(wechatUserDao.Score.Desc()).Debug().FindByPage(0, 10)

@@ -9,6 +9,7 @@ import (
 
 type CreateReq struct {
 	UserName string `json:"user_name" binding:"required"`
+	DeviceId string `json:"device_id" binding:"required"`
 	Score    int    `json:"score"`
 }
 
@@ -21,7 +22,7 @@ func (h *WechatUserHandler) Create(ctx *gin.Context) {
 		return
 	}
 
-	result, err := h.service.Create(ctx, reqBody.UserName, reqBody.Score)
+	result, err := h.service.Create(ctx, reqBody.UserName, reqBody.DeviceId, reqBody.Score)
 	if err != nil {
 		logger.Errorw("Handler WechatUser Create service.Create error", "error", err)
 		response.InternalError(ctx)

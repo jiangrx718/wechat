@@ -7,6 +7,11 @@ import (
 	"wechat-tools/utils"
 )
 
+type SWechatUserUpdateResp struct {
+	UserName string `json:"user_name"`
+	Score    int    `json:"score"`
+}
+
 func (s *Service) Update(ctx context.Context, userName string, score int) (common.ServiceResult, error) {
 	var (
 		logger = utils.SugarContext(ctx)
@@ -35,7 +40,7 @@ func (s *Service) Update(ctx context.Context, userName string, score int) (commo
 		return result, err
 	}
 
-	result.Data = SWechatUserResp{
+	result.Data = SWechatUserUpdateResp{
 		UserName: userName,
 		Score:    score,
 	}

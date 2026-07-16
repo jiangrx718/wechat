@@ -7,7 +7,7 @@ import (
 
 type ServiceIFace interface {
 	// Create 创建
-	Create(ctx context.Context, userName string, score int) (common.ServiceResult, error)
+	Create(ctx context.Context, userName, deviceId string, score int) (common.ServiceResult, error)
 	// Update 更新
 	Update(ctx context.Context, userName string, score int) (common.ServiceResult, error)
 	// List 列表

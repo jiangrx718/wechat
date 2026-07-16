@@ -10,10 +10,11 @@ import (
 
 type SWechatUserResp struct {
 	UserName string `json:"user_name"`
+	DeviceId string `json:"device_id"`
 	Score    int    `json:"score"`
 }
 
-func (s *Service) Create(ctx context.Context, userName string, score int) (common.ServiceResult, error) {
+func (s *Service) Create(ctx context.Context, userName, deviceId string, score int) (common.ServiceResult, error) {
 	var (
 		logger = utils.SugarContext(ctx)
 		result = common.NewServiceResult()
@@ -21,6 +22,7 @@ func (s *Service) Create(ctx context.Context, userName string, score int) (commo
 
 	wechatUserData := model.SWechatUser{
 		UserName: userName,
+		DeviceId: deviceId,
 		Score:    score,
 	}
 
@@ -42,6 +44,7 @@ func (s *Service) Create(ctx context.Context, userName string, score int) (commo
 
 	result.Data = SWechatUserResp{
 		UserName: wechatUserData.UserName,
+		DeviceId: wechatUserData.DeviceId,
 		Score:    wechatUserData.Score,
 	}
 	result.SetMessage("操作成功")
