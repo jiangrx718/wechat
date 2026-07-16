@@ -15,7 +15,7 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build \
         -ldflags="-s -w -X main.Version=docker" \
         -trimpath \
-        -o tool-agent .
+        -o wechat-app .
 
 # ===== Runtime stage =====
 FROM alpine:3.19 as prod
@@ -28,8 +28,8 @@ RUN apk add --no-cache ca-certificates tzdata \
 
 WORKDIR /app
 
-COPY --from=builder /app/tool-agent ./tool-agent
+COPY --from=builder /app/wechat-app ./wechat-app
 
 EXPOSE 8080
 
-ENTRYPOINT ["./tool-agent"]
+ENTRYPOINT ["./wechat-app"]

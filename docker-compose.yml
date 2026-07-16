@@ -1,24 +1,19 @@
-# web: HTTP 服务（默认 action）
-# worker: 定时任务（worker start 子命令）
-# 两者共用同一个镜像，只是启动命令不同
+version: '3.8'
+
 services:
-  web:
+  tools:
     build: .
-    image: tool-agent:latest
-    container_name: tool-agent-web
+    container_name: wechat-app
     ports:
       - "8080:8080"
     volumes:
-      - ./config:/app/config
-      - ./logs:/app/logs
-    restart: unless-stopped
+      - ./config/app.yml:/app/config/app.yml      # 挂载配置文件 宿主机目录:容器目录
+    networks:
+      - common-app-net
 
-  worker:
-    build: .
-    image: tool-agent:latest
-    container_name: tool-agent-worker
-    command: ["worker", "start"]
-    volumes:
-      - ./config:/app/config
-      - ./logs:/app/logs
-    restart: unless-stopped
+volumes:
+  mysql_data:
+
+networks:
+  common-app-net:
+    external: true
