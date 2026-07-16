@@ -21,7 +21,7 @@ type WechatUserHandler struct {
 func (h *WechatUserHandler) RegisterRoutes(routerGroup *gin.RouterGroup) {
 	g := routerGroup.Group("/wechat-user")
 
-	// 绘本相关接口
+	g.POST("/exists", h.Exist)
 	g.POST("/create", h.Create)
 	g.POST("/update", h.Update)
 	g.GET("/list", h.List)
