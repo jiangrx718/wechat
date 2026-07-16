@@ -33,7 +33,9 @@ func (s *Service) List(ctx context.Context) (common.ServiceResult, error) {
 	)
 
 	wechatUserDao := dao.SWechatUser
-	where := []gen.Condition{}
+	where := []gen.Condition{
+		wechatUserDao.Score.Gt(0),
+	}
 
 	list, _, err := wechatUserDao.Where(where...).Order(wechatUserDao.Score.Desc()).Debug().FindByPage(0, 10)
 	if err != nil {
