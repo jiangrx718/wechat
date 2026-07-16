@@ -48,3 +48,5 @@
 {"level":"fatal","ts":"2026-07-16 09:54:05","caller":"wechat-tools/main.go:34","msg":"Error 1071 (42000): Specified key was too long; max key length is 3072 bytes"}
 {"level":"info","ts":"2026-07-16 09:54:26","caller":"commands/db.go:30","msg":"AutoMigrate success"}
 {"level":"info","ts":"2026-07-16 09:54:57","caller":"commands/db.go:30","msg":"AutoMigrate success"}
+{"level":"info","ts":"2026-07-16 10:20:34","caller":"wechat_user/impl_create.go:19","msg":"Handler WechatUser Create ctx.Bind err","request_id":"6e4eeebb-6ef4-4f33-9bee-1605f8a87010","error":"Key: 'CreateReq.UserName' Error:Field validation for 'UserName' failed on the 'required' tag"}
+{"level":"info","ts":"2026-07-16 10:21:44","caller":"wechat_user/impl_update.go:20","msg":"Handler WechatUser Update ctx.Bind err","request_id":"5dda1ec3-d783-4a1f-a25a-f8dcd8c23bea","error":"Key: 'UpdateReq.UserName' Error:Field validation for 'UserName' failed on the 'required' tag"}

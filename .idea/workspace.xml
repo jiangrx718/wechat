@@ -5,26 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54e8256b-3e3a-48f6-83d6-71eecbe28298" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/commands/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/commands/db.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/demo/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/commands/demo/init.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands/gen.go" beforeDir="false" afterPath="$PROJECT_DIR$/commands/gen.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/dao/gen.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/dao/gen.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/dao/s_picture_book.gen.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/service/picture_book/impl.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/service/picture_book/impl_create.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/service/picture_book/impl_delete.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/service/picture_book/impl_list.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/service/picture_book/impl_update.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/service/picture_book/interface.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/tool-agent.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/tool-agent.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/s_picture_book.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/http/handlers/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/server/http/handlers/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/http/handlers/picture_book/impl.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/http/handlers/picture_book/impl_create.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/http/handlers/picture_book/impl_delete.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/http/handlers/picture_book/impl_list.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/http/handlers/picture_book/impl_update.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tmp/runner-build" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/runner-build" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +30,9 @@
   &quot;fromUser&quot;: false
 }</component>
   <component name="ProjectId" id="3GZ4UmPoCK8wdcmZkuI8JpTepud" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />

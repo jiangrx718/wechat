@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"wechat-tools/server/http/handlers/wechat_user"
 	"wechat-tools/utils"
 
 	"github.com/gin-gonic/gin"
@@ -20,6 +21,7 @@ func NewHandler(router *gin.Engine) utils.HttpServerHandler {
 
 // RegisterRoutes 注册所有路由
 func (h *Handler) RegisterRoutes() {
-	//g := h.router.Group("/api")
+	g := h.router.Group("/api")
 
+	wechat_user.NewWechatUserHandler(h.router).RegisterRoutes(g)
 }
