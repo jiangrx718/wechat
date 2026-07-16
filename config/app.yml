@@ -1,5 +1,5 @@
 debug: true
-app: tool-agent
+app: wechat-app
 server:
   addr: ":8080"
 log:
@@ -8,7 +8,7 @@ log:
   disable_sentry: true
   outputs:
     - stdout
-    - ./logs/tool-agent.log
+    - ./logs/wechat-app.log
 # 数据库配置
 tools:
   dialect: mysql
