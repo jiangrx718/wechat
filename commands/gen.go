@@ -24,7 +24,7 @@ var generate = &cli.Command{
 		g.UseDB(conn)
 
 		g.ApplyBasic(
-			model.SPictureBook{},
+			model.SWechatUser{},
 		)
 
 		g.Execute()

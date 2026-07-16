@@ -40,3 +40,11 @@
 {"level":"info","ts":"2026-07-02 15:53:00","caller":"demo/demo.go:17","msg":"示例定时任务执行"}
 {"level":"info","ts":"2026-07-02 15:54:00","caller":"demo/demo.go:17","msg":"示例定时任务执行"}
 {"level":"debug","ts":"2026-07-02 15:54:57","caller":"demo/init.go:47","msg":"关闭示例定时任务"}
+{"level":"fatal","ts":"2026-07-16 09:48:40","caller":"wechat-tools/main.go:34","msg":"open database error: dial tcp 127.0.0.1:3307: connect: connection refused"}
+{"level":"fatal","ts":"2026-07-16 09:48:57","caller":"wechat-tools/main.go:34","msg":"open database error: dial tcp 127.0.0.1:3306: connect: connection refused"}
+{"level":"info","ts":"2026-07-16 09:51:36","caller":"commands/db.go:30","msg":"AutoMigrate success"}
+{"level":"info","ts":"2026-07-16 09:52:30","caller":"commands/db.go:30","msg":"AutoMigrate success"}
+{"level":"error","ts":"2026-07-16 09:54:05","caller":"commands/db.go:26","msg":"AutoMigrate error Error 1071 (42000): Specified key was too long; max key length is 3072 bytes"}
+{"level":"fatal","ts":"2026-07-16 09:54:05","caller":"wechat-tools/main.go:34","msg":"Error 1071 (42000): Specified key was too long; max key length is 3072 bytes"}
+{"level":"info","ts":"2026-07-16 09:54:26","caller":"commands/db.go:30","msg":"AutoMigrate success"}
+{"level":"info","ts":"2026-07-16 09:54:57","caller":"commands/db.go:30","msg":"AutoMigrate success"}

@@ -16,26 +16,26 @@ import (
 )
 
 var (
-	Q            = new(Query)
-	SPictureBook *sPictureBook
+	Q           = new(Query)
+	SWechatUser *sWechatUser
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
-	SPictureBook = &Q.SPictureBook
+	SWechatUser = &Q.SWechatUser
 }
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:           db,
-		SPictureBook: newSPictureBook(db, opts...),
+		db:          db,
+		SWechatUser: newSWechatUser(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	SPictureBook sPictureBook
+	SWechatUser sWechatUser
 }
 
 func (q *Query) Available() bool { return q.db != nil }
@@ -44,8 +44,8 @@ func (q *Query) UnderlyingDB() *gorm.DB { return q.db }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:           db,
-		SPictureBook: q.SPictureBook.clone(db),
+		db:          db,
+		SWechatUser: q.SWechatUser.clone(db),
 	}
 }
 
@@ -59,18 +59,18 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:           db,
-		SPictureBook: q.SPictureBook.replaceDB(db),
+		db:          db,
+		SWechatUser: q.SWechatUser.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	SPictureBook ISPictureBookDo
+	SWechatUser ISWechatUserDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		SPictureBook: q.SPictureBook.WithContext(ctx),
+		SWechatUser: q.SWechatUser.WithContext(ctx),
 	}
 }
 

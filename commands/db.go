@@ -21,7 +21,7 @@ var dbCommand = &cli.Command{
 				}
 
 				if err := db.AutoMigrate(
-					&model.SPictureBook{},
+					&model.SWechatUser{},
 				); err != nil {
 					utils.Sugar().Errorf("AutoMigrate error %v", err)
 					return err

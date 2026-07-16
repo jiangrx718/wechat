@@ -27,6 +27,12 @@ func InitWorkerDemo() *WorkerDemo {
 
 // GracefulStart 启动定时任务,context 取消时优雅停止
 func (w *WorkerDemo) GracefulStart(ctx context.Context) {
+	cronSwitch := viper.GetBool("demo.switch")
+	if !cronSwitch {
+		utils.Sugar().Debug("未开启定时任务")
+		return
+	}
+
 	utils.Sugar().Debug("开启示例定时任务")
 
 	cronExpr := viper.GetString("demo.cron")
