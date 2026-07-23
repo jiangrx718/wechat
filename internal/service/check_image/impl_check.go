@@ -181,6 +181,7 @@ func callImgSecCheck(ctx context.Context, token string, media []byte, filename s
 	}
 
 	url := fmt.Sprintf(urlImgSecCheck, token)
+	fmt.Printf("请求的url为：%s \n", url)
 	client := &http.Client{Timeout: httpTimeout}
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, body)
 	if err != nil {
