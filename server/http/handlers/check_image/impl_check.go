@@ -26,9 +26,9 @@ func (h *CheckImageHandler) Check(ctx *gin.Context) {
 		return
 	}
 
-	// 限制文件大小（img_sec_check 单图上限约 1MB）
-	if fileHeader.Size > 1<<20 { // 1MB
-		response.Failed(ctx, response.CodeParameterErr, "图片过大，请选择小于 1MB 的图片", nil)
+	// 限制文件大小（img_sec_check 单图上限约 5MB）
+	if fileHeader.Size > 5<<20 { // 5MB
+		response.Failed(ctx, response.CodeParameterErr, "图片过大，请选择小于 5MB 的图片", nil)
 		return
 	}
 
