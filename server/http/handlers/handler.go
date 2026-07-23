@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"wechat-tools/server/http/handlers/check_image"
 	"wechat-tools/server/http/handlers/wechat_user"
 	"wechat-tools/utils"
 
@@ -24,4 +25,5 @@ func (h *Handler) RegisterRoutes() {
 	g := h.router.Group("/api")
 
 	wechat_user.NewWechatUserHandler(h.router).RegisterRoutes(g)
+	check_image.NewCheckImageHandler(h.router).RegisterRoutes(g)
 }

@@ -15,3 +15,8 @@ tools:
 demo:
   switch: false
   cron: "*/1 * * * *"
+# 微信小程序内容安全检测（security.imgSecCheck）所需凭证
+# 也可用环境变量覆盖：WECHAT_APPID / WECHAT_SECRET（viper 已开启 .→_ 替换）
+wechat:
+  appid: "your-appid"
+  secret: "your-secret"
