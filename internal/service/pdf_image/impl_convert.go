@@ -1,14 +1,18 @@
 package pdf_image
 
 import (
+	"bytes"
 	"context"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/pdfcpu/pdfcpu/pkg/api"
 
 	"wechat-tools/internal/common"
 )
@@ -65,9 +69,28 @@ func pageNumFromPath(path string) int {
 	return num
 }
 
+// tryRemoveWatermark 尝试基于 PDF 结构移除水印。
+// pdfcpu 通过解析 PDF 内部对象识别并删除水印，识别不到时原样保留 PDF，不会误伤正文。
+// 任何错误（含识别不到第三方水印、PDF 加密/损坏）均安全回退为返回原始 pdfData，
+// 调用方因此永远可以继续后续渲染流程，不会因去水印失败而中断。
+func tryRemoveWatermark(pdfData []byte) []byte {
+	var buf bytes.Buffer
+	reader := bytes.NewReader(pdfData)
+	// selectedPages 传 nil 表示作用于所有页；conf 传 nil 使用默认配置
+	if err := api.RemoveWatermarks(reader, &buf, nil, nil); err != nil {
+		// 安全回退：保留原始 PDF，仅记录日志
+		log.Printf("pdf_image: remove watermark failed, fallback to original PDF: %v", err)
+		return pdfData
+	}
+	if buf.Len() == 0 {
+		log.Printf("pdf_image: remove watermark produced empty output, fallback to original PDF")
+		return pdfData
+	}
+	return buf.Bytes()
+}
+
 // Convert 实现 PDF 转图片核心逻辑。
-// 当 params.OutputDir 非空时，图片直接写入该目录且不会被自动清理（由调用方管理生命周期）；
-// 否则使用系统临时目录且会在函数返回后清理。
+// 全程使用系统临时目录，转换完成后将图片读入内存并立即清理临时目录，不在服务端持久化任何文件。
 func (s *Service) Convert(ctx context.Context, pdfData []byte, filename string, opts ...ConvertOption) (common.ServiceResult, error) {
 	result := common.NewServiceResult()
 
@@ -108,23 +131,19 @@ func (s *Service) Convert(ctx context.Context, pdfData []byte, filename string, 
 		return result, nil
 	}
 
-	// 确定工作目录
-	workDir := params.OutputDir
-	if workDir == "" {
-		workDir, err = os.MkdirTemp("", "pdf_image_*")
-		if err != nil {
-			result.SetCode(500)
-			result.SetMessage("创建临时目录失败")
-			return result, fmt.Errorf("MkdirTemp: %w", err)
-		}
-		defer os.RemoveAll(workDir)
-	} else {
-		if err := os.MkdirAll(workDir, 0755); err != nil {
-			result.SetCode(500)
-			result.SetMessage("创建输出目录失败")
-			return result, fmt.Errorf("MkdirAll: %w", err)
-		}
+	// 渲染前去水印：基于 PDF 结构精准移除，识别不到水印时原样保留，不会误伤正文
+	if params.RemoveWatermark {
+		pdfData = tryRemoveWatermark(pdfData)
 	}
+
+	// 使用系统临时目录，函数返回后自动清理，不在服务端持久化
+	workDir, err := os.MkdirTemp("", "pdf_image_*")
+	if err != nil {
+		result.SetCode(500)
+		result.SetMessage("创建临时目录失败")
+		return result, fmt.Errorf("MkdirTemp: %w", err)
+	}
+	defer os.RemoveAll(workDir)
 
 	// 写入 PDF
 	pdfPath := filepath.Join(workDir, "input.pdf")
@@ -154,7 +173,7 @@ func (s *Service) Convert(ctx context.Context, pdfData []byte, filename string, 
 	}
 
 	ext := imageExt(format)
-	matches, err := filepath.Glob(filepath.Join(workDir, "page*" + ext))
+	matches, err := filepath.Glob(filepath.Join(workDir, "page*"+ext))
 	if err != nil {
 		result.SetCode(500)
 		result.SetMessage("读取转换结果失败")
@@ -174,9 +193,15 @@ func (s *Service) Convert(ctx context.Context, pdfData []byte, filename string, 
 	mime := imageMime(format)
 	images := make([]PageImage, 0, len(matches))
 	for _, match := range matches {
+		data, err := os.ReadFile(match)
+		if err != nil {
+			result.SetCode(500)
+			result.SetMessage("读取转换后的图片失败")
+			return result, fmt.Errorf("ReadFile %s: %w", match, err)
+		}
 		images = append(images, PageImage{
 			Page: pageNumFromPath(match),
-			Path: match,
+			Data: data,
 			Mime: mime,
 		})
 	}

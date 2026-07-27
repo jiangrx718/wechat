@@ -1,30 +1,33 @@
 package pdf_image
 
 import (
+	"encoding/base64"
 	"fmt"
 	"io"
-	"os"
-	"path/filepath"
 	"strconv"
+	"strings"
 
 	pdfImageService "wechat-tools/internal/service/pdf_image"
 	"wechat-tools/server/http/response"
 	"wechat-tools/utils"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 // Convert PDF 转图片接口。
 //
-// 请求: multipart/form-data
-//   - file:    PDF 文件（必填）
-//   - format:  (可选) 图片格式 png/jpeg，默认 png
-//   - dpi:     (可选) 输出分辨率 72-600，默认 150
-//   - page:    (可选) 指定转换的页码（从 1 开始），0 或不传表示转换整个 PDF 的全部页
-//   - quality: (可选) 清晰度档位 low/medium/high/original，设置后覆盖 dpi
+// 全程不在服务端持久化图片，转换结果以 base64 data URI 直接返回，前端（含微信小程序 <image>）可直接用于预览。
 //
-// 响应: {"code":0,"msg":"操作成功","data":{"total_pages":N,"images":[{"page":1,"url":"https://...","mime":"image/png"},...]}}
+// 请求: multipart/form-data
+//   - file:             PDF 文件（必填）
+//   - format:           (可选) 图片格式 png/jpeg，默认 png
+//   - dpi:              (可选) 输出分辨率 72-600，默认 150
+//   - page:             (可选) 指定转换的页码（从 1 开始），0 或不传表示转换整个 PDF 的全部页
+//   - quality:          (可选) 清晰度档位 low/medium/high/original，设置后覆盖 dpi
+//   - remove_watermark: (可选) 渲染前是否尝试移除水印，传 1/true 启用；默认 false。
+//                      基于结构化移除，识别不到时原样保留，不会误伤正文。
+//
+// 响应: {"code":0,"msg":"操作成功","data":{"total_pages":N,"images":[{"page":1,"data":"data:image/png;base64,...","mime":"image/png"},...]}}
 func (h *PdfImageHandler) Convert(ctx *gin.Context) {
 	var logger = utils.SugarContext(ctx)
 
@@ -72,51 +75,43 @@ func (h *PdfImageHandler) Convert(ctx *gin.Context) {
 	}
 	// quality: 清晰度档位 low/medium/high/original，设置后覆盖 dpi
 	quality := ctx.DefaultPostForm("quality", "")
-
-	// 创建唯一会话目录，转换后的图片文件会直接存入此目录
-	sessionID := uuid.New().String()
-	sessionDir := filepath.Join(h.staticDir, sessionID)
+	// remove_watermark: 1/true 启用渲染前去水印（基于结构化移除，识别不到时原样保留）
+	rawRW := ctx.DefaultPostForm("remove_watermark", "")
+	removeWatermark := rawRW == "1" || strings.EqualFold(rawRW, "true")
 
 	result, err := h.service.Convert(ctx, pdfData, fileHeader.Filename,
 		pdfImageService.WithFormat(format),
 		pdfImageService.WithDPI(dpi),
 		pdfImageService.WithPage(page),
 		pdfImageService.WithQuality(quality),
-		pdfImageService.WithOutputDir(sessionDir),
+		pdfImageService.WithRemoveWatermark(removeWatermark),
 	)
 	if err != nil {
 		logger.Errorw("Handler PdfImage Convert service.Convert error", "error", err)
-		h.cleanupSession(sessionDir)
 		response.InternalError(ctx)
 		return
 	}
 
 	if result.GetCode() != 0 {
-		h.cleanupSession(sessionDir)
 		response.Failed(ctx, result.GetCode(), result.GetMessage(), nil)
 		return
 	}
 
-	// 构造响应：将 PageImage.Path 转为小程序可访问的完整 URL
+	// 构造响应：将 PageImage.Data 编码为 base64 data URI，前端可直接用于预览
 	cr := result.GetData().(*pdfImageService.ConvertResult)
-	resp := h.buildConvertResponse(ctx, sessionID, cr)
+	resp := h.buildConvertResponse(cr)
 
 	response.Successful(ctx, resp)
 }
 
-// buildConvertResponse 将服务层结果转为带 URL 的 HTTP 响应体
-func (h *PdfImageHandler) buildConvertResponse(ctx *gin.Context, sessionID string, cr *pdfImageService.ConvertResult) *convertResponse {
-	scheme := "http"
-	if ctx.Request.TLS != nil {
-		scheme = "https"
-	}
-	baseURL := fmt.Sprintf("%s://%s", scheme, ctx.Request.Host)
-
+// buildConvertResponse 将服务层结果转为带 data URI 的 HTTP 响应体
+func (h *PdfImageHandler) buildConvertResponse(cr *pdfImageService.ConvertResult) *convertResponse {
 	images := make([]pageImageResponse, 0, len(cr.Images))
 	for _, img := range cr.Images {
+		dataURI := fmt.Sprintf("data:%s;base64,%s", img.Mime, base64.StdEncoding.EncodeToString(img.Data))
 		images = append(images, pageImageResponse{
 			Page: img.Page,
-			URL:  fmt.Sprintf("%s/api/pdf-image/session/%s/%s", baseURL, sessionID, filepath.Base(img.Path)),
+			Data: dataURI,
 			Mime: img.Mime,
 		})
 	}
@@ -127,15 +122,10 @@ func (h *PdfImageHandler) buildConvertResponse(ctx *gin.Context, sessionID strin
 	}
 }
 
-// cleanupSession 删除失败的会话目录
-func (h *PdfImageHandler) cleanupSession(sessionDir string) {
-	_ = os.RemoveAll(sessionDir)
-}
-
 // pageImageResponse 图片条目响应结构
 type pageImageResponse struct {
 	Page int    `json:"page"`
-	URL  string `json:"url"`
+	Data string `json:"data"` // base64 data URI，可直接作为 <image src> 预览
 	Mime string `json:"mime"`
 }
 

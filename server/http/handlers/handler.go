@@ -27,5 +27,5 @@ func (h *Handler) RegisterRoutes() {
 
 	wechat_user.NewWechatUserHandler(h.router).RegisterRoutes(g)
 	check_image.NewCheckImageHandler(h.router).RegisterRoutes(g)
-	pdf_image.NewPdfImageHandler(h.router).RegisterRoutes(g)
+	pdf_image.NewPdfImageHandler().RegisterRoutes(g)
 }
