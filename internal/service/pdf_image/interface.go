@@ -2,6 +2,7 @@ package pdf_image
 
 import (
 	"context"
+	"strings"
 
 	"wechat-tools/internal/common"
 )
@@ -12,6 +13,7 @@ type ConvertParams struct {
 	DPI       int    // 输出分辨率，默认 150
 	OutputDir string // 输出目录（绝对路径），pdftoppm 将图片写入此目录；为空则由服务选择临时目录
 	Page      int    // 指定转换的页码（从 1 开始），0 表示转换整个 PDF 的全部页
+	Quality   string // 清晰度档位: low / medium / high / original，为空时使用 DPI
 }
 
 // ConvertOption 转换参数选项
@@ -42,6 +44,30 @@ func WithOutputDir(dir string) ConvertOption {
 func WithPage(page int) ConvertOption {
 	return func(p *ConvertParams) {
 		p.Page = page
+	}
+}
+
+// WithQuality 设置清晰度档位: low / medium / high / original。
+// 设置后会覆盖 DPI，分别映射为 96 / 150 / 300 / 600。
+func WithQuality(quality string) ConvertOption {
+	return func(p *ConvertParams) {
+		p.Quality = quality
+	}
+}
+
+// dpiFromQuality 将清晰度档位映射为 DPI，未识别的档位返回 0（表示沿用 DPI 参数）
+func dpiFromQuality(quality string) int {
+	switch strings.ToLower(quality) {
+	case "low":
+		return 96
+	case "medium":
+		return 150
+	case "high":
+		return 300
+	case "original":
+		return 600
+	default:
+		return 0
 	}
 }
 

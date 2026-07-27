@@ -90,6 +90,11 @@ func (s *Service) Convert(ctx context.Context, pdfData []byte, filename string, 
 		return result, nil
 	}
 
+	// 清晰度档位优先：若指定了 quality 则覆盖 DPI，否则沿用 DPI 参数
+	if q := dpiFromQuality(params.Quality); q > 0 {
+		params.DPI = q
+	}
+
 	if params.DPI < 72 || params.DPI > 600 {
 		result.SetCode(400)
 		result.SetMessage(fmt.Sprintf("不支持的 DPI: %d，有效范围 72-600", params.DPI))

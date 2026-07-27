@@ -18,10 +18,11 @@ import (
 // Convert PDF 转图片接口。
 //
 // 请求: multipart/form-data
-//   - file:   PDF 文件（必填）
-//   - format: (可选) 图片格式 png/jpeg，默认 png
-//   - dpi:    (可选) 输出分辨率 72-600，默认 150
-//   - page:   (可选) 指定转换的页码（从 1 开始），0 或不传表示转换整个 PDF 的全部页
+//   - file:    PDF 文件（必填）
+//   - format:  (可选) 图片格式 png/jpeg，默认 png
+//   - dpi:     (可选) 输出分辨率 72-600，默认 150
+//   - page:    (可选) 指定转换的页码（从 1 开始），0 或不传表示转换整个 PDF 的全部页
+//   - quality: (可选) 清晰度档位 low/medium/high/original，设置后覆盖 dpi
 //
 // 响应: {"code":0,"msg":"操作成功","data":{"total_pages":N,"images":[{"page":1,"url":"https://...","mime":"image/png"},...]}}
 func (h *PdfImageHandler) Convert(ctx *gin.Context) {
@@ -69,6 +70,8 @@ func (h *PdfImageHandler) Convert(ctx *gin.Context) {
 	if err != nil || page < 0 {
 		page = 0
 	}
+	// quality: 清晰度档位 low/medium/high/original，设置后覆盖 dpi
+	quality := ctx.DefaultPostForm("quality", "")
 
 	// 创建唯一会话目录，转换后的图片文件会直接存入此目录
 	sessionID := uuid.New().String()
@@ -78,6 +81,7 @@ func (h *PdfImageHandler) Convert(ctx *gin.Context) {
 		pdfImageService.WithFormat(format),
 		pdfImageService.WithDPI(dpi),
 		pdfImageService.WithPage(page),
+		pdfImageService.WithQuality(quality),
 		pdfImageService.WithOutputDir(sessionDir),
 	)
 	if err != nil {
