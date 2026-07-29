@@ -68,6 +68,8 @@ var cardsData = []categoryDTO{
 			{Key: "nonogram", Name: "数织阵图", Icon: "🖼️", Desc: "数字推图 · 画出古风", Tag: "12关", URL: "/pages/nonogram/nonogram", Sort: 5, Visible: true},
 			{Key: "minesweeper", Name: "经典扫雷", Icon: "🚩", Desc: "长按插旗 · 推理排雷", Tag: "3档", URL: "/pages/minesweeper/minesweeper", Sort: 6, Visible: true},
 			{Key: "spot", Name: "双图找茬", Icon: "🔍", Desc: "程序生图 · 圈出不同", Tag: "找茬", URL: "/pages/spot/spot", Sort: 7, Visible: true},
+			{Key: "sokoban", Name: "运粮入库", Icon: "📦", Desc: "推箱入库 · 12关闯关", Tag: "经典", URL: "/pages/sokoban/sokoban", Sort: 8, Visible: true},
+			{Key: "bonfire", Name: "烽火传令", Icon: "🔥", Desc: "一笔遍历 · 20关闯关", Tag: "20关", URL: "/pages/bonfire/bonfire", Sort: 9, Visible: true},
 		},
 	},
 	{
@@ -90,6 +92,7 @@ var cardsData = []categoryDTO{
 			{Key: "mergecube", Name: "幂次方块", Icon: "🟧", Desc: "数字合成 · 连消翻倍", Tag: "2048", URL: "/pages/mergecube/mergecube", Sort: 3, Visible: true},
 			{Key: "block", Name: "方块奇兵", Icon: "🟦", Desc: "七形旋转 · 消行连击", Tag: "Tetris", URL: "/pages/block/block", Sort: 4, Visible: true},
 			{Key: "tri", Name: "飞花三消", Icon: "🎯", Desc: "交换连字 · 成语暴击", Tag: "三消", URL: "/pages/tri/tri", Sort: 5, Visible: true},
+			{Key: "ride", Name: "千里走单骑", Icon: "🐎", Desc: "跳跃跨障 · 无尽跑酷", Tag: "跑酷", URL: "/pages/ride/ride", Sort: 6, Visible: true},
 		},
 	},
 	{
