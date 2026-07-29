@@ -34,15 +34,17 @@ func (h *HomeHandler) RegisterRoutes(routerGroup *gin.RouterGroup) {
 
 // categoriesResp 响应数据
 type categoriesResp struct {
+	DailyEntry dailyEntryDTO `json:"dailyEntry"` // 「今日推荐玩法」入口卡片配置
 	Categories []categoryDTO `json:"categories"`
 }
 
 // Categories 获取首页玩法卡片配置
 //
 // 下发规则：
-//  1. 整个分类 Visible=false 时不下发该分类；
-//  2. 单张卡片 Visible=false 时不下发该卡片（分类仍下发）；
-//  3. 分类内卡片全部隐藏时，整个分类不下发。
+//  1. dailyEntry 直接下发（Visible 控制今日推荐入口卡片是否展示）；
+//  2. 整个分类 Visible=false 时不下发该分类；
+//  3. 单张卡片 Visible=false 时不下发该卡片（分类仍下发）；
+//  4. 分类内卡片全部隐藏时，整个分类不下发。
 // 返回数据已按 Sort 升序排好，前端可直接渲染。
 func (h *HomeHandler) Categories(ctx *gin.Context) {
 	out := make([]categoryDTO, 0, len(cardsData))
@@ -77,5 +79,8 @@ func (h *HomeHandler) Categories(ctx *gin.Context) {
 		return out[i].Sort < out[j].Sort
 	})
 
-	response.Successful(ctx, categoriesResp{Categories: out})
+	response.Successful(ctx, categoriesResp{
+		DailyEntry: dailyEntryData,
+		Categories: out,
+	})
 }
