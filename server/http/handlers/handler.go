@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"wechat-tools/server/http/handlers/check_image"
+	"wechat-tools/server/http/handlers/home"
 	"wechat-tools/server/http/handlers/pdf_image"
 	"wechat-tools/server/http/handlers/wechat_user"
 	"wechat-tools/utils"
@@ -28,4 +29,5 @@ func (h *Handler) RegisterRoutes() {
 	wechat_user.NewWechatUserHandler(h.router).RegisterRoutes(g)
 	check_image.NewCheckImageHandler(h.router).RegisterRoutes(g)
 	pdf_image.NewPdfImageHandler().RegisterRoutes(g)
+	home.NewHomeHandler().RegisterRoutes(g)
 }
