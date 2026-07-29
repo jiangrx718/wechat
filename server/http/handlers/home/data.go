@@ -48,7 +48,7 @@ type dailyEntryDTO struct {
 // 调整是否展示该卡片：把 Visible 改为 false，重启服务生效。
 // 调整副标题文案：修改 Sub。
 var dailyEntryData = dailyEntryDTO{
-	Visible: false,
+	Visible: true,
 	Sub:     "今日推荐玩法 · 连续打卡赢连胜",
 }
 
@@ -62,28 +62,28 @@ var cardsData = []categoryDTO{
 		Key: "classic", Name: "巧思解谜", Icon: "🧩", Sub: "经典复原 · 逐关突破", Sort: 1, Visible: true,
 		Games: []gameDTO{
 			{Key: "puzzle", Name: "思维拼图休闲", Icon: "🧩", Desc: "选图拼合 · 多种难度", Tag: "经典", URL: "/pages/index/index", Sort: 1, Visible: true},
-			{Key: "huarong", Name: "华容道", Icon: "🔢", Desc: "数字滑块 · 复原闯关", Tag: "经典", URL: "/pages/huarong/huarong", Sort: 2, Visible: false},
-			{Key: "lights", Name: "烽火台", Icon: "🔥", Desc: "点灯解谜 · 逐关闯关", Tag: "20关", URL: "/pages/lights/lights", Sort: 3, Visible: false},
-			{Key: "flow", Name: "行军路线", Icon: "🛤️", Desc: "同色连线 · 逐关闯关", Tag: "20关", URL: "/pages/flow/flow", Sort: 4, Visible: false},
-			{Key: "nonogram", Name: "数织阵图", Icon: "🖼️", Desc: "数字推图 · 画出古风", Tag: "12关", URL: "/pages/nonogram/nonogram", Sort: 5, Visible: false},
-			{Key: "minesweeper", Name: "经典扫雷", Icon: "🚩", Desc: "长按插旗 · 推理排雷", Tag: "3档", URL: "/pages/minesweeper/minesweeper", Sort: 6, Visible: false},
-			{Key: "spot", Name: "双图找茬", Icon: "🔍", Desc: "程序生图 · 圈出不同", Tag: "找茬", URL: "/pages/spot/spot", Sort: 7, Visible: false},
+			{Key: "huarong", Name: "华容道", Icon: "🔢", Desc: "数字滑块 · 复原闯关", Tag: "经典", URL: "/pages/huarong/huarong", Sort: 2, Visible: true},
+			{Key: "lights", Name: "烽火台", Icon: "🔥", Desc: "点灯解谜 · 逐关闯关", Tag: "20关", URL: "/pages/lights/lights", Sort: 3, Visible: true},
+			{Key: "flow", Name: "行军路线", Icon: "🛤️", Desc: "同色连线 · 逐关闯关", Tag: "20关", URL: "/pages/flow/flow", Sort: 4, Visible: true},
+			{Key: "nonogram", Name: "数织阵图", Icon: "🖼️", Desc: "数字推图 · 画出古风", Tag: "12关", URL: "/pages/nonogram/nonogram", Sort: 5, Visible: true},
+			{Key: "minesweeper", Name: "经典扫雷", Icon: "🚩", Desc: "长按插旗 · 推理排雷", Tag: "3档", URL: "/pages/minesweeper/minesweeper", Sort: 6, Visible: true},
+			{Key: "spot", Name: "双图找茬", Icon: "🔍", Desc: "程序生图 · 圈出不同", Tag: "找茬", URL: "/pages/spot/spot", Sort: 7, Visible: true},
 		},
 	},
 	{
 		Key: "word", Name: "文墨雅趣", Icon: "📚", Sub: "诗词成语 · 妙笔生花", Sort: 2, Visible: true,
 		Games: []gameDTO{
 			{Key: "poetry", Name: "飞花令", Icon: "🌸", Desc: "诗词填字 · 按卷闯关", Tag: "4大类别", URL: "/pages/poetry/poetry", Sort: 1, Visible: true},
-			{Key: "wordchain", Name: "三国拼词", Icon: "📜", Desc: "成语接龙 · 百回闯关", Tag: "120回", URL: "/pages/wordchain/wordchain", Sort: 2, Visible: false},
-			{Key: "idiomchain", Name: "成语接龙", Icon: "🔗", Desc: "同音相接 · 百回闯关", Tag: "120关", URL: "/pages/idiomchain/idiomchain", Sort: 3, Visible: false},
-			{Key: "idiomspot", Name: "成语找茬", Icon: "🔍", Desc: "找出错字 · 30关精选", Tag: "300题", URL: "/pages/idiomspot/idiomspot", Sort: 4, Visible: false},
-			{Key: "idiommatch", Name: "成语消消乐", Icon: "💥", Desc: "点字成词 · 限时连消", Tag: "限时", URL: "/pages/idiommatch/idiommatch", Sort: 5, Visible: false},
-			{Key: "poetryflash", Name: "诗词闪电", Icon: "⚡", Desc: "限时选字 · 无尽挑战", Tag: "上瘾", URL: "/pages/poetryflash/poetryflash", Sort: 6, Visible: false},
-			{Key: "wordle", Name: "字谜方阵", Icon: "🔤", Desc: "成语 Wordle · 绿黄灰破译", Tag: "每日", URL: "/pages/wordle/wordle", Sort: 7, Visible: false},
+			{Key: "wordchain", Name: "三国拼词", Icon: "📜", Desc: "成语接龙 · 百回闯关", Tag: "120回", URL: "/pages/wordchain/wordchain", Sort: 2, Visible: true},
+			{Key: "idiomchain", Name: "成语接龙", Icon: "🔗", Desc: "同音相接 · 百回闯关", Tag: "120关", URL: "/pages/idiomchain/idiomchain", Sort: 3, Visible: true},
+			{Key: "idiomspot", Name: "成语找茬", Icon: "🔍", Desc: "找出错字 · 30关精选", Tag: "300题", URL: "/pages/idiomspot/idiomspot", Sort: 4, Visible: true},
+			{Key: "idiommatch", Name: "成语消消乐", Icon: "💥", Desc: "点字成词 · 限时连消", Tag: "限时", URL: "/pages/idiommatch/idiommatch", Sort: 5, Visible: true},
+			{Key: "poetryflash", Name: "诗词闪电", Icon: "⚡", Desc: "限时选字 · 无尽挑战", Tag: "上瘾", URL: "/pages/poetryflash/poetryflash", Sort: 6, Visible: true},
+			{Key: "wordle", Name: "字谜方阵", Icon: "🔤", Desc: "成语 Wordle · 绿黄灰破译", Tag: "每日", URL: "/pages/wordle/wordle", Sort: 7, Visible: true},
 		},
 	},
 	{
-		Key: "speed", Name: "手速挑战", Icon: "⚡", Sub: "反应合成 · 极限连击", Sort: 3, Visible: false,
+		Key: "speed", Name: "手速挑战", Icon: "⚡", Sub: "反应合成 · 极限连击", Sort: 3, Visible: true,
 		Games: []gameDTO{
 			{Key: "fibonacci", Name: "校场点兵", Icon: "⚔️", Desc: "斐波那契 · 滑动合并", Tag: "3+5→8", URL: "/pages/fibonacci/fibonacci", Sort: 1, Visible: true},
 			{Key: "stack", Name: "通天塔", Icon: "🗼", Desc: "一指叠塔 · 极限挑战", Tag: "上瘾", URL: "/pages/stack/stack", Sort: 2, Visible: true},
@@ -93,7 +93,7 @@ var cardsData = []categoryDTO{
 		},
 	},
 	{
-		Key: "strategy", Name: "策略防御", Icon: "🛡️", Sub: "塔防守卫 · 排兵布阵", Sort: 4, Visible: false,
+		Key: "strategy", Name: "策略防御", Icon: "🛡️", Sub: "塔防守卫 · 排兵布阵", Sort: 4, Visible: true,
 		Games: []gameDTO{
 			{Key: "td", Name: "萝卜保卫战", Icon: "🥕", Desc: "建塔防御 · 12关闯关", Tag: "塔防", URL: "/pages/td/td", Sort: 1, Visible: true},
 			{Key: "autochess", Name: "合成战棋", Icon: "♟️", Desc: "合成升星 · 无尽防守", Tag: "自走棋", URL: "/pages/autochess/autochess", Sort: 2, Visible: true},
