@@ -70,6 +70,7 @@ var cardsData = []categoryDTO{
 			{Key: "spot", Name: "双图找茬", Icon: "🔍", Desc: "程序生图 · 圈出不同", Tag: "找茬", URL: "/pages/spot/spot", Sort: 7, Visible: true},
 			{Key: "sokoban", Name: "运粮入库", Icon: "📦", Desc: "推箱入库 · 12关闯关", Tag: "经典", URL: "/pages/sokoban/sokoban", Sort: 8, Visible: true},
 			{Key: "bonfire", Name: "烽火传令", Icon: "🔥", Desc: "一笔遍历 · 20关闯关", Tag: "20关", URL: "/pages/bonfire/bonfire", Sort: 9, Visible: true},
+			{Key: "dujiang", Name: "都江堰", Icon: "💧", Desc: "旋转接水 · 12关闯关", Tag: "12关", URL: "/pages/dujiang/dujiang", Sort: 10, Visible: true},
 		},
 	},
 	{
@@ -93,6 +94,8 @@ var cardsData = []categoryDTO{
 			{Key: "block", Name: "方块奇兵", Icon: "🟦", Desc: "七形旋转 · 消行连击", Tag: "Tetris", URL: "/pages/block/block", Sort: 4, Visible: true},
 			{Key: "tri", Name: "飞花三消", Icon: "🎯", Desc: "交换连字 · 成语暴击", Tag: "三消", URL: "/pages/tri/tri", Sort: 5, Visible: true},
 			{Key: "ride", Name: "千里走单骑", Icon: "🐎", Desc: "跳跃跨障 · 无尽跑酷", Tag: "跑酷", URL: "/pages/ride/ride", Sort: 6, Visible: true},
+			{Key: "lianhuan", Name: "连环计", Icon: "🎆", Desc: "点选连消 · 大块高分", Tag: "连消", URL: "/pages/lianhuan/lianhuan", Sort: 7, Visible: true},
+			{Key: "liuhe", Name: "六合阵", Icon: "⬡", Desc: "六边形版 · 2048合成", Tag: "2048", URL: "/pages/liuhe/liuhe", Sort: 8, Visible: true},
 		},
 	},
 	{
