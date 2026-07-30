@@ -16,3 +16,13 @@ func NewCheckImageService() *CheckImageService {
 	dao.SetDefault(utils.DB())
 	return s
 }
+
+type WechatUserService struct {
+	db *gorm.DB
+}
+
+func NewWechatUserService() *WechatUserService {
+	s := &WechatUserService{db: utils.DB()}
+	dao.SetDefault(utils.DB())
+	return s
+}

@@ -1,6 +1,6 @@
 package miniwechat
 
-// handler_home.go 首页玩法卡片接口
+// impl_home.go 首页玩法卡片接口
 //
 // 用途：小程序首页 pages/home/home 通过本接口拉取玩法卡片配置，
 // 后端通过 visible 字段控制每张卡片 / 每个分类是否在首页展示。
@@ -15,22 +15,6 @@ import (
 
 	"wechat-tools/server/http/response"
 )
-
-// NewHomeHandler 创建首页卡片处理器
-func NewHomeHandler() *HomeHandler {
-	return &HomeHandler{}
-}
-
-// HomeHandler 首页卡片处理器
-type HomeHandler struct{}
-
-// RegisterRoutes 注册路由
-func (h *HomeHandler) RegisterRoutes(routerGroup *gin.RouterGroup) {
-	g := routerGroup.Group("/home")
-
-	// GET /api/home/categories 获取首页玩法卡片配置
-	g.GET("/categories", h.Categories)
-}
 
 // categoriesResp 响应数据
 type categoriesResp struct {
