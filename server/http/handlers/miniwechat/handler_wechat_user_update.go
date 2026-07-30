@@ -1,4 +1,4 @@
-package wechat_user
+package miniwechat
 
 import (
 	"wechat-tools/server/http/response"

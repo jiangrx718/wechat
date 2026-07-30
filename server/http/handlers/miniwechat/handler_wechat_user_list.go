@@ -1,7 +1,7 @@
-package wechat_user
+package miniwechat
 
 import (
-	wechatUserService "wechat-tools/internal/service/wechat_user"
+	wechatUserService "wechat-tools/internal/service/miniwechat"
 	"wechat-tools/server/http/response"
 	"wechat-tools/utils"
 

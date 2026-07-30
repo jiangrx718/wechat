@@ -1,6 +1,6 @@
-package home
+package miniwechat
 
-// data.go 首页玩法卡片配置数据
+// handler_home_data.go 首页玩法卡片配置数据
 //
 // 与小程序前端 pages/home/home.js 中的 categories 保持一致，
 // 后端通过 visible 字段控制每张卡片（及每个分类）是否在小程序首页展示。

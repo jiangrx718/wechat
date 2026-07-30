@@ -1,4 +1,4 @@
-package wechat_user
+package miniwechat
 
 import (
 	"context"
@@ -28,7 +28,7 @@ func toWechatUserItem(m *model.SWechatUser) WechatUserItem {
 	}
 }
 
-func (s *Service) List(ctx context.Context) (common.ServiceResult, error) {
+func (s *WechatUserService) List(ctx context.Context) (common.ServiceResult, error) {
 	var (
 		logger = utils.SugarContext(ctx)
 		result = common.NewServiceResult()

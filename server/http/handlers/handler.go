@@ -1,10 +1,7 @@
 package handlers
 
 import (
-	"wechat-tools/server/http/handlers/check_image"
-	"wechat-tools/server/http/handlers/home"
-	"wechat-tools/server/http/handlers/pdf_image"
-	"wechat-tools/server/http/handlers/wechat_user"
+	"wechat-tools/server/http/handlers/miniwechat"
 	"wechat-tools/utils"
 
 	"github.com/gin-gonic/gin"
@@ -26,8 +23,7 @@ func NewHandler(router *gin.Engine) utils.HttpServerHandler {
 func (h *Handler) RegisterRoutes() {
 	g := h.router.Group("/api")
 
-	wechat_user.NewWechatUserHandler(h.router).RegisterRoutes(g)
-	check_image.NewCheckImageHandler(h.router).RegisterRoutes(g)
-	pdf_image.NewPdfImageHandler().RegisterRoutes(g)
-	home.NewHomeHandler().RegisterRoutes(g)
+	miniwechat.NewWechatUserHandler(h.router).RegisterRoutes(g)
+	miniwechat.NewCheckImageHandler(h.router).RegisterRoutes(g)
+	miniwechat.NewHomeHandler().RegisterRoutes(g)
 }

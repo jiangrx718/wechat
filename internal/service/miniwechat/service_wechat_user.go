@@ -1,11 +1,11 @@
-package wechat_user
+package miniwechat
 
 import (
 	"context"
 	"wechat-tools/internal/common"
 )
 
-type ServiceIFace interface {
+type WechatUserServiceIFace interface {
 	// Exist 是否存在
 	Exist(ctx context.Context, deviceId string) (common.ServiceResult, error)
 	// Create 创建

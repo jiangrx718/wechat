@@ -1,4 +1,4 @@
-package check_image
+package miniwechat
 
 import (
 	"io"

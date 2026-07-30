@@ -1,7 +1,7 @@
-package wechat_user
+package miniwechat
 
 import (
-	wechatUserService "wechat-tools/internal/service/wechat_user"
+	wechatUserService "wechat-tools/internal/service/miniwechat"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,11 +15,11 @@ func NewWechatUserHandler(engine *gin.Engine) *WechatUserHandler {
 
 type WechatUserHandler struct {
 	engine  *gin.Engine
-	service wechatUserService.ServiceIFace
+	service wechatUserService.WechatUserServiceIFace
 }
 
 func (h *WechatUserHandler) RegisterRoutes(routerGroup *gin.RouterGroup) {
-	g := routerGroup.Group("/wechat-user")
+	g := routerGroup.Group("/miniwechat-user")
 
 	g.POST("/exists", h.Exist)
 	g.POST("/create", h.Create)

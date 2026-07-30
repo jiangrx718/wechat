@@ -1,7 +1,7 @@
-package check_image
+package miniwechat
 
 import (
-	checkImageService "wechat-tools/internal/service/check_image"
+	checkImageService "wechat-tools/internal/service/miniwechat"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,7 +15,7 @@ func NewCheckImageHandler(engine *gin.Engine) *CheckImageHandler {
 
 type CheckImageHandler struct {
 	engine  *gin.Engine
-	service checkImageService.ServiceIFace
+	service checkImageService.CheckImageServiceIFace
 }
 
 func (h *CheckImageHandler) RegisterRoutes(routerGroup *gin.RouterGroup) {

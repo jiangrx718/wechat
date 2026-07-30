@@ -1,4 +1,4 @@
-package check_image
+package miniwechat
 
 import (
 	"bytes"
@@ -67,10 +67,10 @@ func getAccessToken(ctx context.Context) (string, error) {
 		return globalTokenCache.token, nil
 	}
 
-	appid := viper.GetString("wechat.appid")
-	secret := viper.GetString("wechat.secret")
+	appid := viper.GetString("miniwechat.appid")
+	secret := viper.GetString("miniwechat.secret")
 	if appid == "" || secret == "" || appid == "your-appid" {
-		return "", fmt.Errorf("wechat appid/secret 未配置")
+		return "", fmt.Errorf("miniwechat appid/secret 未配置")
 	}
 
 	url := fmt.Sprintf(urlAccessToken, appid, secret)
@@ -92,7 +92,7 @@ func getAccessToken(ctx context.Context) (string, error) {
 		return "", fmt.Errorf("解析 access_token 响应失败: %w, body=%s", err, string(body))
 	}
 	if tr.ErrCode != 0 || tr.AccessToken == "" {
-		logger.Errorw("getAccessToken wechat error", "errcode", tr.ErrCode, "errmsg", tr.ErrMsg)
+		logger.Errorw("getAccessToken miniwechat error", "errcode", tr.ErrCode, "errmsg", tr.ErrMsg)
 		return "", fmt.Errorf("微信返回错误: errcode=%d errmsg=%s", tr.ErrCode, tr.ErrMsg)
 	}
 
@@ -111,7 +111,7 @@ func invalidateToken() {
 }
 
 // Check 对图片做内容安全检测
-func (s *Service) Check(ctx context.Context, media []byte, filename string) (common.ServiceResult, error) {
+func (s *CheckImageService) Check(ctx context.Context, media []byte, filename string) (common.ServiceResult, error) {
 	var (
 		logger = utils.SugarContext(ctx)
 		result = common.NewServiceResult()

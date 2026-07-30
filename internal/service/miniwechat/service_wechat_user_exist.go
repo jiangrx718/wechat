@@ -1,4 +1,4 @@
-package wechat_user
+package miniwechat
 
 import (
 	"context"
@@ -11,7 +11,7 @@ type SWechatUserExistResp struct {
 	Count int64 `json:"count"`
 }
 
-func (s *Service) Exist(ctx context.Context, deviceId string) (common.ServiceResult, error) {
+func (s *WechatUserService) Exist(ctx context.Context, deviceId string) (common.ServiceResult, error) {
 	var (
 		logger = utils.SugarContext(ctx)
 		result = common.NewServiceResult()

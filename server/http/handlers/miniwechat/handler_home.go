@@ -1,6 +1,6 @@
-package home
+package miniwechat
 
-// home.go 首页玩法卡片接口
+// handler_home.go 首页玩法卡片接口
 //
 // 用途：小程序首页 pages/home/home 通过本接口拉取玩法卡片配置，
 // 后端通过 visible 字段控制每张卡片 / 每个分类是否在首页展示。
@@ -45,6 +45,7 @@ type categoriesResp struct {
 //  2. 整个分类 Visible=false 时不下发该分类；
 //  3. 单张卡片 Visible=false 时不下发该卡片（分类仍下发）；
 //  4. 分类内卡片全部隐藏时，整个分类不下发。
+//
 // 返回数据已按 Sort 升序排好，前端可直接渲染。
 func (h *HomeHandler) Categories(ctx *gin.Context) {
 	out := make([]categoryDTO, 0, len(cardsData))

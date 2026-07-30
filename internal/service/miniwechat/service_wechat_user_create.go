@@ -1,4 +1,4 @@
-package wechat_user
+package miniwechat
 
 import (
 	"context"
@@ -14,7 +14,7 @@ type SWechatUserResp struct {
 	Score    int    `json:"score"`
 }
 
-func (s *Service) Create(ctx context.Context, userName, deviceId string, score int) (common.ServiceResult, error) {
+func (s *WechatUserService) Create(ctx context.Context, userName, deviceId string, score int) (common.ServiceResult, error) {
 	var (
 		logger = utils.SugarContext(ctx)
 		result = common.NewServiceResult()
