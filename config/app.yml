@@ -20,3 +20,24 @@ demo:
 wechat:
   appid: "your-appid"
   secret: "your-secret"
+
+# 知识库（基于 Eino 框架）：文件入库 + 语义检索
+# 配置项均可通过环境变量覆盖，例如：
+#   AGENT_MILVUS_ADDR / AGENT_EMBEDDING_API_KEY（viper 已开启 .→_ 替换）
+agent:
+  milvus:
+    addr: "localhost:19530"
+    username: ""
+    password: ""
+    collection: "wechat_doc_kb"
+  embedding:
+    api_key: "your-openai-key"
+    model: "text-embedding-3-small"
+    base_url: ""          # 可选，OpenAI 代理或兼容服务地址
+    dimensions: 1536      # 必须与 model 输出维度一致，且与首次建表时的维度保持一致
+  chunk:
+    size: 500             # 每段字符数（rune 计数，中文友好）
+    overlap: 50           # 相邻片段重叠字符数
+  search:
+    top_k: 5              # 默认返回结果数
+    score_threshold: 0.3  # 相似度阈值（COSINE，越大越相关）
