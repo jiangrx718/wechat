@@ -67,10 +67,10 @@ func getAccessToken(ctx context.Context) (string, error) {
 		return globalTokenCache.token, nil
 	}
 
-	appid := viper.GetString("miniwechat.appid")
-	secret := viper.GetString("miniwechat.secret")
-	if appid == "" || secret == "" || appid == "your-appid" {
-		return "", fmt.Errorf("miniwechat appid/secret 未配置")
+	appid := viper.GetString("wechat.appid")
+	secret := viper.GetString("wechat.secret")
+	if appid == "" || secret == "" {
+		return "", fmt.Errorf("wechat appid/secret 未配置")
 	}
 
 	url := fmt.Sprintf(urlAccessToken, appid, secret)
