@@ -103,9 +103,14 @@ func InitFromViper() {
 		return level >= enableLevel
 	})
 
-	// 日志编码格式
+	// 日志编码格式（文件用，无颜色）
 	encoderConfig := zap.NewProductionEncoderConfig()
 	encoderConfig.EncodeTime = zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05")
+
+	// 控制台编码格式（带颜色高亮：error 红色、warn 黄色）
+	consoleEncoderConfig := zap.NewDevelopmentEncoderConfig()
+	consoleEncoderConfig.EncodeTime = zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05")
+	consoleEncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 
 	// 内核集合
 	cores := make([]zapcore.Core, 0)
@@ -114,12 +119,12 @@ func InitFromViper() {
 
 		// 标准输出
 		case stdout:
-			stdoutEncoder := zapcore.NewConsoleEncoder(encoderConfig)
+			stdoutEncoder := zapcore.NewConsoleEncoder(consoleEncoderConfig)
 			cores = append(cores, zapcore.NewCore(stdoutEncoder, zapcore.Lock(os.Stdout), levelEnabler))
 
 		// 标准错误输出
 		case stderr:
-			stderrEncoder := zapcore.NewConsoleEncoder(encoderConfig)
+			stderrEncoder := zapcore.NewConsoleEncoder(consoleEncoderConfig)
 			cores = append(cores, zapcore.NewCore(stderrEncoder, zapcore.Lock(os.Stdout), levelEnabler))
 
 		// 默认文件输出
@@ -195,8 +200,13 @@ func Sugar() *zap.SugaredLogger {
 }
 
 // SugarContext 获取带 context 的 SugaredLogger
+// 当 context 中存在 x-request-id 时才附带该字段，避免启动阶段等无请求场景输出 null
 func SugarContext(ctx context.Context) *zap.SugaredLogger {
-	return logger.Sugar().With("request_id", ctx.Value("x-request-id"))
+	sugar := logger.Sugar()
+	if requestID, ok := ctx.Value("x-request-id").(string); ok && requestID != "" {
+		sugar = sugar.With("request_id", requestID)
+	}
+	return sugar
 }
 
 func sentryLevel(lvl zapcore.Level) sentry.Level {

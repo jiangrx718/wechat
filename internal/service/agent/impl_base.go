@@ -1,9 +1,11 @@
 package agent
 
 import (
+	"context"
 	"errors"
 	"os"
 	"strings"
+	"wechat-tools/utils"
 
 	"github.com/sashabaranov/go-openai"
 )
@@ -19,6 +21,7 @@ func NewAgentClient() (*AgentClient, error) {
 	agentBaseURL := strings.TrimSpace(os.Getenv("AGENT_BASE_URL"))
 	agentModel := strings.TrimSpace(os.Getenv("AGENT_MODEL"))
 	if agentApiKey == "" || agentBaseURL == "" || agentModel == "" {
+		utils.SugarContext(context.Background()).Error("AGENT_API_KEY,AGENT_BASE_URL,AGENT_MODEL is require")
 		return nil, errors.New("AGENT_API_KEY,AGENT_BASE_URL,AGENT_MODEL is require")
 	}
 
