@@ -32,6 +32,5 @@ func (h *AgentHandler) Ask(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(200, result)
-	return
+	response.Successful(ctx, result.GetData())
 }

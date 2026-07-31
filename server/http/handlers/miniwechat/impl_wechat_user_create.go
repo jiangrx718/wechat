@@ -34,6 +34,5 @@ func (h *WechatUserHandler) Create(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(200, result)
-	return
+	response.Successful(ctx, result.GetData())
 }
