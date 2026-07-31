@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"wechat-tools/server/http/handlers/agent"
 	"wechat-tools/server/http/handlers/miniwechat"
 	"wechat-tools/utils"
 
@@ -26,4 +27,5 @@ func (h *Handler) RegisterRoutes() {
 	miniwechat.NewWechatUserHandler(h.router).RegisterRoutes(g)
 	miniwechat.NewCheckImageHandler(h.router).RegisterRoutes(g)
 	miniwechat.NewHomeHandler().RegisterRoutes(g)
+	agent.NewAgentHandler(h.router).RegisterRoutes(g)
 }
