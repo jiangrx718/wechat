@@ -1,8 +1,8 @@
 package miniwechat
 
 import (
-	"wechat-tools/server/http/response"
 	"wechat-tools/utils"
+	"wechat-tools/utils/tool/response"
 
 	"github.com/gin-gonic/gin"
 )

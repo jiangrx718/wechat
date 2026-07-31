@@ -10,10 +10,9 @@ package miniwechat
 
 import (
 	"sort"
+	"wechat-tools/utils/tool/response"
 
 	"github.com/gin-gonic/gin"
-
-	"wechat-tools/server/http/response"
 )
 
 // categoriesResp 响应数据
