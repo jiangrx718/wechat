@@ -21,5 +21,5 @@ type AgentHandler struct {
 func (h *AgentHandler) RegisterRoutes(routerGroup *gin.RouterGroup) {
 	g := routerGroup.Group("/agent")
 
-	g.POST("/Ask", h.Ask)
+	g.POST("/ask", h.Ask)
 }
