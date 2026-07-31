@@ -8,11 +8,17 @@ import (
 )
 
 type AgentService struct {
-	db *gorm.DB
+	db     *gorm.DB
+	client *AgentClient
 }
 
 func NewAgentService() *AgentService {
 	s := &AgentService{db: utils.DB()}
 	dao.SetDefault(utils.DB())
+
+	// 初始化 openai client
+	if agentClient, err := NewAgentClient(); err == nil {
+		s.client = agentClient
+	}
 	return s
 }
